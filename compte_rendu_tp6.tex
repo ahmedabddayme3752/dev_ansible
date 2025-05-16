@@ -8,6 +8,9 @@
 \usepackage{geometry}
 \usepackage{titling}
 \usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{sectsty}
+\usepackage{setspace}
 \geometry{a4paper, margin=2.5cm}
 
 % Configuration des listings pour le code
@@ -15,6 +18,7 @@
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{deepblue}{rgb}{0.0, 0.2, 0.5}
 
 \lstdefinestyle{mystyle}{
     backgroundcolor=\color{backcolour},   
@@ -37,6 +41,19 @@
 
 \lstset{style=mystyle}
 
+% Personnalisation des titres de section
+\sectionfont{\color{deepblue}\large\bfseries}
+\subsectionfont{\color{deepblue}\normalsize\bfseries}
+
+% En-têtes et pieds de page
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{TP6: Jenkins-Ansible}
+\fancyhead[R]{Ahmed Abd Dayem - 23243}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
 % Personnalisation de la page de titre
 \title{\Huge{\textbf{TP 6 : Intégration Jenkins-Ansible}}}
 \author{\Large{Ahmed Abd Dayem Ahmed Bouha} \\ \\ \large{Matricule : \textbf{23243}} \\ \vspace{2cm} \large{Matière : \textbf{IRT43: DevOps}}}
@@ -47,25 +64,39 @@
 % Page de titre personnalisée
 \begin{titlepage}
     \centering
-    \vspace*{2cm}
-    {\Huge\bfseries TP 6 : Intégration Jenkins-Ansible\par}
-    \vspace{2cm}
+    \vspace*{1cm}
+    
+    \includegraphics[width=0.4\textwidth]{images/jenkins_logo.png}\\[1cm]
+    
+    \rule{\linewidth}{0.5mm} \\[0.5cm]
+    {\Huge\bfseries\color{deepblue} TP 6 : Intégration\\Jenkins-Ansible\par}
+    \rule{\linewidth}{0.5mm} \\[1.5cm]
+    
     {\LARGE\bfseries Ahmed Abd Dayem Ahmed Bouha\par}
     \vspace{0.5cm}
     {\large Matricule : \textbf{23243}\par}
     \vspace{1.5cm}
-    {\large Matière : \textbf{IRT43: DevOps}\par}
+    {\large\bfseries Matière : \textbf{IRT43: DevOps}\par}
     \vspace{1.5cm}
     {\large\today\par}
-    \vspace{1.5cm}
+    \vfill
+    
+    \begin{flushright}
     {\LARGE\bfseries Professeur : Dr. Fatimetou Abdou\par}
+    \end{flushright}
+    
     \vspace{1cm}
 \end{titlepage}
 
+\thispagestyle{empty}
+\begin{center}
+\Large{\textbf{Table des matières}}
+\end{center}
 \tableofcontents
 \thispagestyle{empty}
 \newpage
 
+\setspace{1.1}
 \setcounter{page}{1}
 \section{Introduction}
 Ce rapport présente la réalisation du TP 6 portant sur l'intégration de Jenkins avec Ansible pour automatiser le déploiement d'applications depuis GitHub. Ce projet démontre la mise en place d'un pipeline CI/CD complet qui permet d'extraire du code source depuis un dépôt GitHub et de le déployer automatiquement sur des serveurs cibles à l'aide d'Ansible.
@@ -98,7 +129,6 @@ Les principaux objectifs de ce travail pratique sont les suivants :
 \subsection{Installation de Jenkins}
 % Étape 1: Installer Jenkins
 
-% Ici, vous ajouterez la capture d'écran de l'installation de Jenkins
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{images/jenkins_installation.png}
@@ -128,7 +158,6 @@ Pour la configuration initiale de Jenkins, j'ai récupéré le mot de passe admi
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 \end{lstlisting}
 
-% Ici, vous ajouterez la capture d'écran de la page de déverrouillage Jenkins
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{images/jenkins_unlock.png}
@@ -143,7 +172,6 @@ J'ai ensuite suivi l'assistant de configuration pour :
     \item Configurer l'URL de Jenkins
 \end{itemize}
 
-% Ici, vous ajouterez la capture d'écran de Jenkins après configuration
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{images/jenkins_dashboard.png}
@@ -160,7 +188,6 @@ Pour ce TP, j'ai installé les plugins suivants depuis l'interface de gestion de
     \item Ansible Plugin : pour exécuter des playbooks Ansible
 \end{itemize}
 
-% Ici, vous ajouterez la capture d'écran de la page des plugins
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{images/jenkins_plugins.png}
@@ -191,7 +218,6 @@ git commit -m "Add project files"
 git push -u origin main
 \end{lstlisting}
 
-% Ici, vous ajouterez la capture d'écran du dépôt GitHub
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{images/github_repo.png}
@@ -220,7 +246,6 @@ Pour créer le pipeline Jenkins, j'ai suivi les étapes suivantes :
     \item J'ai cliqué sur "OK" pour créer le job
 \end{enumerate}
 
-% Capture d'écran du formulaire de création du job
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{images/jenkins_newitem.png}
@@ -241,7 +266,6 @@ Dans la page de configuration du pipeline, j'ai configuré les paramètres suiva
     \item Dans "Script Path", j'ai vérifié que "Jenkinsfile" était bien spécifié
 \end{enumerate}
 
-% Capture d'écran de la configuration du pipeline
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{images/jenkins_pipeline_config.png}
@@ -332,79 +356,6 @@ Le playbook \texttt{deploy.yml} définit les tâches nécessaires pour déployer
 
 \begin{lstlisting}[language=yaml]
 ---
-- name: Deploy web application
-  hosts: web
-  become: yes
-  tasks:
-    - name: Update apt cache
-      apt:
-        update_cache: yes
-      when: ansible_os_family == "Debian"
-
-    - name: Ensure Apache is installed
-      apt:
-        name: apache2
-        state: present
-      when: ansible_os_family == "Debian"
-
-    - name: Start and enable Apache service
-      service:
-        name: apache2
-        state: started
-        enabled: yes
-      when: ansible_os_family == "Debian"
-
-    - name: Create application directory
-      file:
-        path: /var/www/html/app
-        state: directory
-        owner: www-data
-        group: www-data
-        mode: '0755'
-
-    - name: Copy application files
-      copy:
-        src: "{{ playbook_dir }}/app/"
-        dest: /var/www/html/app/
-        owner: www-data
-        group: www-data
-        mode: '0644'
-
-    - name: Configure Apache virtual host
-      template:
-        src: "{{ playbook_dir }}/templates/vhost.conf.j2"
-        dest: /etc/apache2/sites-available/app.conf
-        owner: root
-        group: root
-        mode: '0644'
-      when: ansible_os_family == "Debian"
-      notify: Reload Apache
-
-  handlers:
-    - name: Reload Apache
-      service:
-        name: apache2
-        state: reloaded
-      when: ansible_os_family == "Debian"
-\end{lstlisting}
-
-Ce playbook effectue plusieurs opérations essentielles :
-\begin{enumerate}
-    \item Met à jour le cache APT
-    \item Installe le serveur web Apache
-    \item Démarre et active le service Apache
-    \item Crée le répertoire de l'application
-    \item Copie les fichiers de l'application
-    \item Configure un virtual host Apache pour l'application
-    \item Recharge Apache si nécessaire
-\end{enumerate}
-
-\subsection{Simplification du playbook pour les tests}
-
-Après avoir rencontré à nouveau des problèmes de permissions sudo lors de l'exécution du playbook Ansible, j'ai décidé de simplifier complètement le playbook pour qu'il puisse s'exécuter sans privilèges root. J'ai remplacé le déploiement d'Apache par des tâches simples qui peuvent être exécutées par un utilisateur standard :
-
-\begin{lstlisting}[language=yaml]
----
 - name: Test deployment 
   hosts: web
   become: no
@@ -424,42 +375,36 @@ Après avoir rencontré à nouveau des problèmes de permissions sudo lors de l'
         path: /tmp/ansible_test.txt
         state: touch
         mode: '0644'
-      ignore_errors: yes
 
     - name: Write to test file
       copy:
         content: "Deployment test successful on {{ ansible_date_time.date }} at {{ ansible_date_time.time }}"
         dest: /tmp/ansible_test.txt
-      ignore_errors: yes
 
     - name: Show content of test file
       command: cat /tmp/ansible_test.txt
       register: file_content
-      ignore_errors: yes
       changed_when: false
 
     - name: Display file content
       debug:
         var: file_content.stdout_lines
-      ignore_errors: yes
 \end{lstlisting}
 
-Cette approche permet de démontrer le fonctionnement du pipeline CI/CD sans nécessiter de permissions spéciales. Dans un environnement de production réel, il serait nécessaire de configurer correctement les permissions pour permettre à Jenkins d'exécuter des commandes sudo, ou d'utiliser un compte avec les privilèges appropriés.
-
-% Capture d'écran du pipeline après simplification du playbook
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/jenkins_pipeline_simple.png}
-    \caption{Pipeline Jenkins réussi avec playbook simplifié}
-    \label{fig:jenkins_pipeline_simple}
-\end{figure}
+Ce playbook effectue plusieurs opérations de test :
+\begin{enumerate}
+    \item Affiche un message de succès
+    \item Affiche la version d'Ansible
+    \item Crée un fichier de test dans /tmp
+    \item Écrit un message de déploiement réussi dans le fichier
+    \item Affiche le contenu du fichier
+\end{enumerate}
 
 \section{Exécution du pipeline}
 \subsection{Lancement du build}
 
 Après avoir configuré le pipeline, j'ai lancé manuellement le build en cliquant sur "Build Now" ou "Lancer un build" dans l'interface Jenkins.
 
-% Capture d'écran du tableau de bord du pipeline
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{images/jenkins_pipeline_dashboard.png}
@@ -471,7 +416,6 @@ Après avoir configuré le pipeline, j'ai lancé manuellement le build en cliqua
 
 Pendant l'exécution du pipeline, j'ai pu suivre l'avancement des différentes étapes en temps réel grâce à la visualisation du pipeline et à la console de sortie.
 
-% Capture d'écran de la console de sortie
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{images/jenkins_console_output.png}
@@ -479,80 +423,39 @@ Pendant l'exécution du pipeline, j'ai pu suivre l'avancement des différentes �
     \label{fig:jenkins_console_output}
 \end{figure}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/jenkins_console_output_succes.png}
+    \caption{Console de sortie montrant le succès de l'exécution}
+    \label{fig:jenkins_console_output_succes}
+\end{figure}
+
 \subsection{Résultat du pipeline}
 
 Une fois le pipeline terminé, j'ai pu observer le résultat global de l'exécution.
 
-% Capture d'écran du résultat du pipeline
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/jenkins_pipeline_result.png}
-    \caption{Résultat de l'exécution du pipeline}
-    \label{fig:jenkins_pipeline_result}
+    \includegraphics[width=0.8\textwidth]{images/jenkins_pipeline_simple.png}
+    \caption{Pipeline Jenkins réussi avec playbook simplifié}
+    \label{fig:jenkins_pipeline_simple}
 \end{figure}
 
 \section{Vérification du déploiement}
 \subsection{Vérification des fichiers déployés}
 
-Pour confirmer que le déploiement a bien fonctionné, j'ai vérifié la présence des fichiers dans le répertoire de destination à l'aide de la commande suivante :
+Pour confirmer que le déploiement a bien fonctionné, j'ai vérifié la présence du fichier de test créé par Ansible :
 
 \begin{lstlisting}[language=bash]
-ls -la /var/www/html/app/
+ls -la /tmp/ansible_test.txt
+cat /tmp/ansible_test.txt
 \end{lstlisting}
 
-% Capture d'écran des fichiers déployés
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{images/deployed_files.png}
-    \caption{Fichiers déployés dans le répertoire de destination}
+    \caption{Fichier de test déployé par Ansible}
     \label{fig:deployed_files}
-\end{figure}
-
-\subsection{Vérification de l'application}
-
-J'ai également vérifié que l'application était correctement accessible dans un navigateur web en visitant l'URL \texttt{http://localhost/app/}.
-
-% Capture d'écran de l'application déployée
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/deployed_app.png}
-    \caption{Application web déployée dans le navigateur}
-    \label{fig:deployed_app}
-\end{figure}
-
-\section{Configuration du webhook (Optionnel)}
-\subsection{Configuration du webhook GitHub}
-
-Pour automatiser le déclenchement du pipeline lors des changements de code, j'ai configuré un webhook dans GitHub :
-
-\begin{enumerate}
-    \item Dans mon dépôt GitHub, je suis allé dans Settings > Webhooks > Add webhook
-    \item J'ai configuré le webhook avec les paramètres suivants :
-    \begin{itemize}
-        \item Payload URL : \texttt{http://adresse-jenkins:8080/github-webhook/}
-        \item Content type : application/json
-        \item Événements déclencheurs : Just the push event
-    \end{itemize}
-\end{enumerate}
-
-% Capture d'écran de la configuration du webhook GitHub
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/github_webhook.png}
-    \caption{Configuration du webhook GitHub}
-    \label{fig:github_webhook}
-\end{figure}
-
-\subsection{Configuration correspondante dans Jenkins}
-
-Dans la configuration du pipeline Jenkins, j'ai activé l'option "GitHub hook trigger for GITScm polling" dans la section "Build Triggers".
-
-% Capture d'écran de la configuration du déclencheur de build
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/jenkins_webhook_config.png}
-    \caption{Configuration du déclencheur de build dans Jenkins}
-    \label{fig:jenkins_webhook_config}
 \end{figure}
 
 \section{Dépannage des problèmes rencontrés}
@@ -593,42 +496,49 @@ Cette modification présuppose qu'Ansible est déjà installé sur le serveur Je
     \item Utiliser un conteneur Docker comme agent Jenkins avec Ansible préinstallé
 \end{itemize}
 
-\subsection{Problème d'hôtes inaccessibles}
+\subsection{Simplification du playbook pour les tests}
 
-Après avoir résolu le problème de sudo, j'ai rencontré une autre erreur lors de l'exécution du playbook Ansible :
+Après avoir rencontré à nouveau des problèmes de permissions sudo lors de l'exécution du playbook Ansible, j'ai décidé de simplifier complètement le playbook pour qu'il puisse s'exécuter sans privilèges root. J'ai remplacé le déploiement d'Apache par des tâches simples qui peuvent être exécutées par un utilisateur standard :
 
-\begin{lstlisting}
-TASK [Gathering Facts] *********************************************************
-fatal: [web1.example.com]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: Could not resolve hostname web1.example.com: Name or service not known", "unreachable": true}
-fatal: [web2.example.com]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: Could not resolve hostname web2.example.com: Name or service not known", "unreachable": true}
+\begin{lstlisting}[language=yaml]
+---
+- name: Test deployment 
+  hosts: web
+  become: no
+  gather_facts: yes
+  
+  tasks:
+    - name: Echo success message
+      debug:
+        msg: "This is a test deployment on {{ inventory_hostname }}"
+
+    - name: Display ansible version
+      debug:
+        msg: "Ansible version: {{ ansible_version.full }}"
+
+    - name: Create a test file
+      file:
+        path: /tmp/ansible_test.txt
+        state: touch
+        mode: '0644'
+
+    - name: Write to test file
+      copy:
+        content: "Deployment test successful on {{ ansible_date_time.date }} at {{ ansible_date_time.time }}"
+        dest: /tmp/ansible_test.txt
+
+    - name: Show content of test file
+      command: cat /tmp/ansible_test.txt
+      register: file_content
+      changed_when: false
+
+    - name: Display file content
+      debug:
+        var: file_content.stdout_lines
 \end{lstlisting}
 
-Cette erreur était prévisible car les hôtes définis dans le fichier d'inventaire (\texttt{web1.example.com} et \texttt{web2.example.com}) n'existent pas dans mon environnement de développement. Pour résoudre ce problème, j'ai modifié le fichier \texttt{inventory.ini} pour utiliser localhost comme cible de déploiement :
+Cette approche permet de démontrer le fonctionnement du pipeline CI/CD sans nécessiter de permissions spéciales. Dans un environnement de production réel, il serait nécessaire de configurer correctement les permissions pour permettre à Jenkins d'exécuter des commandes sudo, ou d'utiliser un compte avec les privilèges appropriés.
 
-\begin{lstlisting}
-[web]
-localhost ansible_connection=local
-
-[db]
-# db1.example.com ansible_user=ubuntu
-# db2.example.com ansible_user=ubuntu
-
-# Variables that will be applied to all servers
-[all:vars]
-ansible_python_interpreter=/usr/bin/python3
-\end{lstlisting}
-
-J'ai également modifié le playbook \texttt{deploy.yml} pour améliorer sa robustesse :
-\begin{itemize}
-    \item Ajout de \texttt{become\_method: sudo} pour spécifier explicitement la méthode d'élévation de privilèges
-    \item Ajout de \texttt{gather\_facts: yes} pour s'assurer que les informations sur l'hôte sont collectées
-    \item Ajout de \texttt{ignore\_errors: yes} pour chaque tâche afin d'éviter que le pipeline ne s'arrête en cas d'erreur mineure
-    \item Répétition explicite de \texttt{become: yes} pour chaque tâche pour garantir l'élévation de privilèges
-\end{itemize}
-
-Ces modifications permettent au playbook de s'exécuter correctement sur la machine locale, ce qui est idéal pour un environnement de développement ou de test.
-
-% Capture d'écran du pipeline après les deux corrections
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{images/jenkins_pipeline_success.png}
@@ -636,43 +546,17 @@ Ces modifications permettent au playbook de s'exécuter correctement sur la mach
     \label{fig:jenkins_pipeline_success}
 \end{figure}
 
-\section{Conclusion}
-\subsection{Résumé des réalisations}
+\section{Conclusion personnelle}
 
-Dans ce TP, j'ai réussi à :
+Ce TP m'a permis de comprendre et d'appliquer les concepts d'intégration continue et de déploiement continu (CI/CD) en utilisant des outils modernes et très répandus dans l'industrie. J'ai pu constater l'efficacité d'une chaîne d'automatisation pour simplifier et fiabiliser le processus de déploiement logiciel.
+
+La mise en place de l'intégration Jenkins-Ansible présente plusieurs avantages :
 \begin{itemize}
-    \item Installer et configurer Jenkins
-    \item Mettre en place un dépôt GitHub pour le code source
-    \item Créer un pipeline CI/CD avec Jenkins
-    \item Configurer Ansible pour le déploiement automatisé
-    \item Déployer une application web sur un serveur Apache
-    \item Configurer un mécanisme de déclenchement automatique via webhook
+    \item \textbf{Automatisation complète} du processus de déploiement, de l'extraction du code à sa mise en production
+    \item \textbf{Reproductibilité} des déploiements grâce à la définition déclarative des tâches Ansible
+    \item \textbf{Traçabilité} avec l'historique des déploiements et des logs conservés par Jenkins
 \end{itemize}
 
-\subsection{Avantages de l'intégration Jenkins-Ansible}
-
-L'intégration de Jenkins avec Ansible offre plusieurs avantages :
-\begin{itemize}
-    \item \textbf{Automatisation complète} : Le processus de déploiement est entièrement automatisé, de l'extraction du code à sa mise en production.
-    \item \textbf{Reproductibilité} : Les déploiements sont reproductibles et consistants grâce à la définition déclarative des tâches Ansible.
-    \item \textbf{Gestion de la configuration} : Ansible permet de gérer efficacement la configuration des serveurs cibles.
-    \item \textbf{Évolutivité} : Le même pipeline peut être utilisé pour déployer sur un ou plusieurs serveurs sans modification majeure.
-    \item \textbf{Traçabilité} : Jenkins conserve un historique des déploiements et des logs, facilitant le diagnostic des problèmes.
-\end{itemize}
-
-\subsection{Améliorations possibles}
-
-Ce projet pourrait être amélioré de plusieurs façons :
-\begin{itemize}
-    \item Ajouter des étapes de tests automatisés avant le déploiement
-    \item Implémenter une stratégie de déploiement bleu-vert ou canary
-    \item Configurer des notifications (email, Slack) lors des déploiements
-    \item Mettre en place un mécanisme de rollback automatique en cas d'échec
-    \item Utiliser des variables d'environnement pour une meilleure paramétrisation
-\end{itemize}
-
-\subsection{Conclusion personnelle}
-
-Ce TP m'a permis de comprendre et d'appliquer les concepts d'intégration continue et de déploiement continu (CI/CD) en utilisant des outils modernes et très répandus dans l'industrie. J'ai pu constater l'efficacité d'une chaîne d'automatisation pour simplifier et fiabiliser le processus de déploiement logiciel. Les compétences acquises pendant cette session pourront être directement appliquées dans un contexte professionnel de DevOps.
+Malgré les défis rencontrés avec les permissions sudo et la configuration des hôtes, j'ai réussi à mettre en place un pipeline fonctionnel qui démontre les principes de base de l'intégration continue. Les connaissances acquises pendant ce TP pourront être directement appliquées dans un contexte professionnel de DevOps.
 
 \end{document} 
