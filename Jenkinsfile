@@ -14,17 +14,16 @@ pipeline {
             }
         }
         
-        stage('Install Ansible') {
+        stage('Check Ansible') {
             steps {
-                // Check if Ansible is installed, install if not
+                // Check if Ansible is installed
                 sh '''
-                    if ! command -v ansible &> /dev/null; then
-                        echo "Installing Ansible..."
-                        sudo apt-get update
-                        sudo apt-get install -y ansible
-                    else
+                    if command -v ansible &> /dev/null; then
                         echo "Ansible is already installed"
                         ansible --version
+                    else
+                        echo "Ansible is not installed. Please install it before running this pipeline."
+                        exit 1
                     fi
                 '''
             }
