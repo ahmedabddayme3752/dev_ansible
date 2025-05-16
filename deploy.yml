@@ -1,16 +1,46 @@
 ---
-- name: Deploy web application
+- name: Test deployment 
   hosts: web
-  become: yes
-  become_method: sudo
+  become: no
   gather_facts: yes
   
   tasks:
+    - name: Echo success message
+      debug:
+        msg: "This is a test deployment on {{ inventory_hostname }}"
+
+    - name: Display ansible version
+      debug:
+        msg: "Ansible version: {{ ansible_version.full }}"
+
+    - name: Create a test file
+      file:
+        path: /tmp/ansible_test.txt
+        state: touch
+        mode: '0644'
+      ignore_errors: yes
+
+    - name: Write to test file
+      copy:
+        content: "Deployment test successful on {{ ansible_date_time.date }} at {{ ansible_date_time.time }}"
+        dest: /tmp/ansible_test.txt
+      ignore_errors: yes
+
+    - name: Show content of test file
+      command: cat /tmp/ansible_test.txt
+      register: file_content
+      ignore_errors: yes
+      changed_when: false
+
+    - name: Display file content
+      debug:
+        var: file_content.stdout_lines
+      ignore_errors: yes
+
     - name: Update apt cache
       apt:
         update_cache: yes
       when: ansible_os_family == "Debian"
-      become: yes
       ignore_errors: yes
 
     - name: Ensure Apache is installed
@@ -18,7 +48,6 @@
         name: apache2
         state: present
       when: ansible_os_family == "Debian"
-      become: yes
       ignore_errors: yes
 
     - name: Start and enable Apache service
@@ -27,7 +56,6 @@
         state: started
         enabled: yes
       when: ansible_os_family == "Debian"
-      become: yes
       ignore_errors: yes
 
     - name: Create application directory
@@ -37,7 +65,6 @@
         owner: www-data
         group: www-data
         mode: '0755'
-      become: yes
       ignore_errors: yes
 
     - name: Copy application files
@@ -47,7 +74,6 @@
         owner: www-data
         group: www-data
         mode: '0644'
-      become: yes
       ignore_errors: yes
 
     - name: Configure Apache virtual host
@@ -58,8 +84,6 @@
         group: root
         mode: '0644'
       when: ansible_os_family == "Debian"
-      become: yes
-      ignore_errors: yes
       notify: Reload Apache
 
   handlers:
@@ -68,5 +92,4 @@
         name: apache2
         state: reloaded
       when: ansible_os_family == "Debian"
-      become: yes
       ignore_errors: yes
