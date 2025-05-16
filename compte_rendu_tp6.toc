@@ -1,0 +1,40 @@
+\babel@toc {french}{}\relax 
+\contentsline {section}{\numberline {1}Introduction}{1}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Objectifs du TP}{1}{subsection.1.1}%
+\contentsline {section}{\numberline {2}Environnement de travail}{1}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Configuration système}{1}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Outils utilisés}{1}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Installation et configuration de Jenkins}{1}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Installation de Jenkins}{1}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Configuration initiale}{2}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Installation des plugins spécifiques}{2}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Installation des plugins requis}{2}{subsection.4.1}%
+\contentsline {section}{\numberline {5}Préparation du dépôt GitHub}{3}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Création et configuration du dépôt}{3}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Structure du projet}{3}{subsection.5.2}%
+\contentsline {section}{\numberline {6}Création et configuration du pipeline Jenkins}{4}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Création du job pipeline}{4}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Configuration du pipeline}{4}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Analyse du Jenkinsfile}{4}{subsection.6.3}%
+\contentsline {section}{\numberline {7}Configuration d'Ansible}{6}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Fichier d'inventaire}{6}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Playbook Ansible}{6}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Simplification du playbook pour les tests}{7}{subsection.7.3}%
+\contentsline {section}{\numberline {8}Exécution du pipeline}{8}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Lancement du build}{8}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Suivi de l'exécution}{8}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Résultat du pipeline}{8}{subsection.8.3}%
+\contentsline {section}{\numberline {9}Vérification du déploiement}{9}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Vérification des fichiers déployés}{9}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Vérification de l'application}{9}{subsection.9.2}%
+\contentsline {section}{\numberline {10}Configuration du webhook (Optionnel)}{9}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Configuration du webhook GitHub}{9}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Configuration correspondante dans Jenkins}{10}{subsection.10.2}%
+\contentsline {section}{\numberline {11}Dépannage des problèmes rencontrés}{10}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Problème de permissions sudo}{10}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Problème d'hôtes inaccessibles}{11}{subsection.11.2}%
+\contentsline {section}{\numberline {12}Conclusion}{13}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Résumé des réalisations}{13}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Avantages de l'intégration Jenkins-Ansible}{13}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Améliorations possibles}{14}{subsection.12.3}%
+\contentsline {subsection}{\numberline {12.4}Conclusion personnelle}{14}{subsection.12.4}%
