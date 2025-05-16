@@ -1,0 +1,55 @@
+---
+- name: Deploy web application
+  hosts: web
+  become: yes
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Ensure Apache is installed
+      apt:
+        name: apache2
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Start and enable Apache service
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Create application directory
+      file:
+        path: /var/www/html/app
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: '0755'
+
+    - name: Copy application files
+      copy:
+        src: "{{ playbook_dir }}/app/"
+        dest: /var/www/html/app/
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: Configure Apache virtual host
+      template:
+        src: "{{ playbook_dir }}/templates/vhost.conf.j2"
+        dest: /etc/apache2/sites-available/app.conf
+        owner: root
+        group: root
+        mode: '0644'
+      when: ansible_os_family == "Debian"
+      notify: Reload Apache
+
+  handlers:
+    - name: Reload Apache
+      service:
+        name: apache2
+        state: reloaded
+      when: ansible_os_family == "Debian"
