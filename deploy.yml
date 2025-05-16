@@ -18,78 +18,17 @@
         path: /tmp/ansible_test.txt
         state: touch
         mode: '0644'
-      ignore_errors: yes
 
     - name: Write to test file
       copy:
         content: "Deployment test successful on {{ ansible_date_time.date }} at {{ ansible_date_time.time }}"
         dest: /tmp/ansible_test.txt
-      ignore_errors: yes
 
     - name: Show content of test file
       command: cat /tmp/ansible_test.txt
       register: file_content
-      ignore_errors: yes
       changed_when: false
 
     - name: Display file content
       debug:
-        var: file_content.stdout_lines
-      ignore_errors: yes
-
-    - name: Update apt cache
-      apt:
-        update_cache: yes
-      when: ansible_os_family == "Debian"
-      ignore_errors: yes
-
-    - name: Ensure Apache is installed
-      apt:
-        name: apache2
-        state: present
-      when: ansible_os_family == "Debian"
-      ignore_errors: yes
-
-    - name: Start and enable Apache service
-      service:
-        name: apache2
-        state: started
-        enabled: yes
-      when: ansible_os_family == "Debian"
-      ignore_errors: yes
-
-    - name: Create application directory
-      file:
-        path: /var/www/html/app
-        state: directory
-        owner: www-data
-        group: www-data
-        mode: '0755'
-      ignore_errors: yes
-
-    - name: Copy application files
-      copy:
-        src: "{{ playbook_dir }}/app/"
-        dest: /var/www/html/app/
-        owner: www-data
-        group: www-data
-        mode: '0644'
-      ignore_errors: yes
-
-    - name: Configure Apache virtual host
-      template:
-        src: "{{ playbook_dir }}/templates/vhost.conf.j2"
-        dest: /etc/apache2/sites-available/app.conf
-        owner: root
-        group: root
-        mode: '0644'
-      when: ansible_os_family == "Debian"
-      notify: Reload Apache
-
-  handlers:
-    - name: Reload Apache
-      service:
-        name: apache2
-        state: reloaded
-      when: ansible_os_family == "Debian"
-      ignore_errors: yes
+        var: file_content.stdout_lines 
